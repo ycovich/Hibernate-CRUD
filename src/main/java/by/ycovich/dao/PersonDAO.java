@@ -24,7 +24,7 @@ public class PersonDAO {
                 .getResultList();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Person getPerson(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Person.class, id);
@@ -39,15 +39,15 @@ public class PersonDAO {
     @Transactional
     public void update(int id, Person updatedPerson) {
         Session session = sessionFactory.getCurrentSession();
-        Person personToBeUpdated = getPerson(id);
+        Person personToBeUpdated = session.get(Person.class, id);
         personToBeUpdated.setName(updatedPerson.getName());
         personToBeUpdated.setAge(updatedPerson.getAge());
-        session.persist(personToBeUpdated);
+        personToBeUpdated.setEmail(updatedPerson.getEmail());
     }
 
     @Transactional
     public void delete(int id) {
         Session session = sessionFactory.getCurrentSession();
-        session.remove(getPerson(id));
+        session.remove(session.get(Person.class, id));
     }
 }
