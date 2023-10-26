@@ -1,6 +1,7 @@
 package by.ycovich.controller;
 
 import by.ycovich.model.Person;
+import by.ycovich.service.ItemService;
 import by.ycovich.service.PeopleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +15,22 @@ import org.springframework.web.bind.annotation.*;
 public class PeopleController {
 
     private final PeopleService peopleService;
+    private final ItemService itemService;
     @Autowired
-    public PeopleController(PeopleService peopleService) {
+    public PeopleController(PeopleService peopleService, ItemService itemService) {
         this.peopleService = peopleService;
+        this.itemService = itemService;
     }
 
 
     @GetMapping()
     public String index(Model model) {
         model.addAttribute("people", peopleService.findAll());
+
+        itemService.findByItemName("cookie");   //
+        itemService.findByOwner(peopleService.findAll().get(0));    //
+        peopleService.test();   //
+
         return "people/users";
     }
 

@@ -5,6 +5,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -20,7 +24,6 @@ public class Person {
     @Column(name = "name")
     private String name;
 
-
     @Min(value = 0, message = "age should be positive integer")
     @Column(name = "age")
     private int age;
@@ -29,6 +32,19 @@ public class Person {
     @Column(name = "email")
     @NotEmpty(message = "email field should not be empty")
     private String email;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date_of_birth")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date dateOfBirth;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "creation_time")
+    private Date creationTime;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Item> items;
+
 
 
     public Person(){}
@@ -69,6 +85,30 @@ public class Person {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Date getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(Date creationTime) {
+        this.creationTime = creationTime;
     }
 
     @Override
