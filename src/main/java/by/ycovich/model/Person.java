@@ -1,5 +1,6 @@
 package by.ycovich.model;
 
+import by.ycovich.enums.Language;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
@@ -39,8 +40,11 @@ public class Person {
     private Date dateOfBirth;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "creation_time")
+    @Column(name = "creation_time", updatable = false)
     private Date creationTime;
+
+    @Enumerated(EnumType.STRING)
+    private Language language;
 
     @OneToMany(mappedBy = "owner")
     private List<Item> items;
@@ -109,6 +113,14 @@ public class Person {
 
     public void setCreationTime(Date creationTime) {
         this.creationTime = creationTime;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 
     @Override

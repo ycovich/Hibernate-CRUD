@@ -51,6 +51,6 @@ public class Item {
 
     @Override
     public String toString() {
-        return "[item №"+id+"] " + name + "\n[keeper] " + owner.getName();
+        return "\n[item №"+id+"] " + name + "\n[keeper] " + owner.getName();
     }
 }
